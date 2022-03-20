@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: 微軟正黑體;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    #username,
+    #password,
+    h3,
+    #fullname,
+    #comfirm_password,
+    #username2,
+    #password2 {
+        width: 200px;
+        height: 20px;
+        margin: 10px;
+        color: #df5334;
+    }
+
+    h5 {
+        margin: 20px;
+        color: #a3a2a3;
+    }
+
+    h5:hover {
+        color: black;
+    }
+
+    #container1 {
+        margin: 50px;
+        padding: 10px;
+        width: 230px;
+        height: 300px;
+        background-color: white;
+        border-radius: 5px;
+        border-top: 10px solid #df5334;
+        box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
+
+        /*定位對齊*/
+        position: relative;
+        margin: auto;
+        top: 100px;
+        text-align: center;
+    }
+
+    .submit {
+        color: white;
+        background: #df5334;
+        width: 200px;
+        height: 30px;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 0px;
+    }
+
+    .submit:hover {
+        background: #db6937;
+    }
+
+    input {
+        padding: 5px;
+        border: none;
+        border: solid 1px #ccc;
+        border-radius: 5px;
+    }
+</style>
+
+<body>
+    <div class="login_page">
+        <div id="container1">
+
+            <div class="login">
+
+                <h3>登入 Login</h3>
+
+                <input type="text" id="username" name="username" placeholder="帳號">
+                <div class="tab"></div>
+                <input type="text" id="password" name="password" placeholder="密碼">
+                <div class="tab"></div>
+                <input id="click_btn" type="submit" value="登入" class="submit">
+
+            </div><!-- login end-->
+        </div><!-- container1 end-->
+    </div><!-- login_page end-->
+</body>
+
+</html>
+
+<script>
+
+    function change_page() {
+
+        window.location.replace("http://157.245.154.70/for_search.html");
+    }
+
+    document.getElementById('click_btn').onclick = function () {
+      
+
+        if (document.getElementById("username").value != "" && document.getElementById("password").value != "") {
+            change_page();
+        }else{
+            alert("帳號密碼不能為空");
+        }
+
+    }
+
+</script>

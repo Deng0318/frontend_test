@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<style>
+    table,
+    td {
+        border: 1px solid #333;
+    }
+
+    thead,
+    tfoot {
+        background-color: #333;
+        color: #fff;
+    }
+</style>
+
+<body>
+    <input type="text" id="Source_IP" name="Source_IP" placeholder="Source IP">
+    <input id="click_btn_Source_IP" type="submit" value="搜尋SourceIP" class="submit">
+    <br>
+    <input type="text" id="Time_range_form" name="Time_range_form" placeholder="Time range from">
+    <input type="text" id="Time_range_to" name="Time_range_to" placeholder="Time range to">
+    <input id="click_btn_Time_range" type="submit" value="搜尋Timerange" class="submit">
+    <br>
+    <input type="text" id="FQDN" name="FQDN" placeholder="FQDN">
+    <input id="click_btn_FQDN" type="submit" value="搜尋FQDN" class="submit">
+    <br>
+    <div id="for_btn_container">
+        <button>第一頁</button>
+    </div>
+
+
+    <table>
+        <thead>
+            <tr>
+                <td>Date</td>
+                <td>Time</td>
+                <td>usec</td>
+                <td>SourceIP</td>
+                <td>SourcePort</td>
+                <td>DestinationIP</td>
+                <td>DestinationPort</td>
+                <td>FQDN</td>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</body>
+
+</html>
+
+<script>
+
+    for (let index = 0; index < 10; index++) {
+
+        var tr = document.createElement("tr");
+        $("#tbody").append(tr);
+
+        for (let index = 0; index < 8; index++) {
+
+            var td = document.createElement("td");
+            td.innerHTML = "&nbsp;";
+            tr.append(td);
+        }
+    }
+
+    var number;
+
+    document.getElementById('click_btn_Source_IP').onclick = function () {
+
+        $("#tbody").empty();
+        var find_data = new XMLHttpRequest();
+        find_data.open("GET", "search_data.php?status=" + 1 + "&Source_IP=" + $("#Source_IP").val(), false);
+        find_data.onreadystatechange = function check_user() {
+            if (find_data.readyState == 4) {
+                if (find_data.status == 200) {
+
+                    var json_data = find_data.responseText;
+                    var data = JSON.parse(json_data);
+
+                    $("#for_btn_container").empty();
+                    number = Math.floor(data.length / 50);
+                    for (let i = 1; i <= number; i++) {
+                        var button = document.createElement("button");
+                        button.innerHTML = '第' + i + '頁';
+                        button.id = "btn_" + (i - 1);
+                        $("#for_btn_container").append(button);
+                    }
+
+                    for (let index = 0; index < data.length; index++) {
+
+                        var page_num = Math.floor(index / 50);
+                        var tr = document.createElement("tr");
+                        tr.className = "pages" + page_num;
+                        $("#tbody").append(tr);
+
+                        for (let i = 0; i < 8; i++) {
+
+                            var td = document.createElement("td");
+                            td.innerHTML = Object.values(data[index])[i];
+                            tr.append(td);
+                        }
+                    }
+
+                    for (let index = 1; index <= number; index++) {
+                        $(".pages" + index).hide();
+                    }
+                }
+            }
+        }
+        find_data.send();
+    }
+
+    document.getElementById('click_btn_Time_range').onclick = function () {
+
+        $("#tbody").empty();
+        var find_data = new XMLHttpRequest();
+        find_data.open("GET", "search_data.php?status=" + 2 + "&Time_range_form=" + $("#Time_range_form").val() + "&Time_range_to=" + $("#Time_range_to").val(), false);
+        find_data.onreadystatechange = function check_user() {
+            if (find_data.readyState == 4) {
+                if (find_data.status == 200) {
+
+                    var json_data = find_data.responseText;
+                    var data = JSON.parse(json_data);
+
+                    $("#for_btn_container").empty();
+                    number = Math.floor(data.length / 50);
+                    for (let i = 1; i <= number; i++) {
+                        var button = document.createElement("button");
+                        button.innerHTML = '第' + i + '頁';
+                        button.id = "btn_" + (i - 1);
+                        $("#for_btn_container").append(button);
+                    }
+
+                    for (let index = 0; index < data.length; index++) {
+
+                        var page_num = Math.floor(index / 50);
+                        var tr = document.createElement("tr");
+                        tr.className = "pages" + page_num;
+                        $("#tbody").append(tr);
+
+                        for (let i = 0; i < 8; i++) {
+
+                            var td = document.createElement("td");
+                            td.innerHTML = Object.values(data[index])[i];
+                            tr.append(td);
+                        }
+                    }
+
+                    for (let index = 1; index <= number; index++) {
+                        $(".pages" + index).hide();
+                    }
+                }
+            }
+        }
+        find_data.send();
+    }
+
+    document.getElementById('click_btn_FQDN').onclick = function () {
+
+        $("#tbody").empty();
+        var find_data = new XMLHttpRequest();
+        find_data.open("GET", "search_data.php?status=" + 3 + "&FQDN=" + $("#FQDN").val(), false);
+        find_data.onreadystatechange = function check_user() {
+            if (find_data.readyState == 4) {
+                if (find_data.status == 200) {
+
+                    var json_data = find_data.responseText;
+                    var data = JSON.parse(json_data);
+
+                    $("#for_btn_container").empty();
+                    number = Math.floor(data.length / 50);
+                    for (let i = 1; i <= number; i++) {
+                        var button = document.createElement("button");
+                        button.innerHTML = '第' + i + '頁';
+                        button.id = "btn_" + (i - 1);
+                        $("#for_btn_container").append(button);
+                    }
+
+                    for (let index = 0; index < data.length; index++) {
+
+                        var page_num = Math.floor(index / 50);
+                        var tr = document.createElement("tr");
+                        tr.className = "pages" + page_num;
+                        $("#tbody").append(tr);
+
+                        for (let i = 0; i < 8; i++) {
+
+                            var td = document.createElement("td");
+                            td.innerHTML = Object.values(data[index])[i];
+                            tr.append(td);
+                        }
+                    }
+
+                    for (let index = 1; index <= number; index++) {
+                        $(".pages" + index).hide();
+                    }
+                }
+            }
+        }
+        find_data.send();
+    }
+
+    document.addEventListener("click", function (e) {
+
+        var page = e.target.id;
+        var page_text = page.split('_');
+        if (page_text[0] == "btn") {
+
+            for (let index = 0; index <= number; index++) {
+
+                $(".pages" + index).hide();
+            }
+            $(".pages" + page_text[1]).show();
+        }
+    });
+
+</script>
